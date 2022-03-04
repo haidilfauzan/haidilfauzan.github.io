@@ -1,0 +1,35 @@
+.jumbotron {
+    padding:2rem 1rem;
+    background-image: url("img/jum.jpg");
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: 10px -10px ;
+    background-repeat: no-repeat;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    
+
+}
+
+.head{
+    display: inline-block;
+    vertical-align: middle;
+    margin: 8px;
+
+    
+}
+
+.mt-n1 {
+    margin-top: -2rem !important;
+  }
+
+
+.col{
+    margin-bottom: 0.5rem;
+}
+
+
+h5{
+    font-weight: bold;
+}
