@@ -9,7 +9,6 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-  <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
   <script src="https://use.fontawesome.com/releases/v5.15.4/js/all.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="style.css">
 
@@ -185,7 +184,7 @@
                     Windows and Mac Os.</p>
                 </li>
                 <li>
-                  <h6 class="card-subtitletext-muted">MICROSOFT OFFICE</h6>
+                  <h6 class="card-subtitle text-muted">MICROSOFT OFFICE</h6>
                   <p class="card-text mb-2">Able to use MS applications
                     as Word, Excel and Powerpoint.</p>
                 </li>
@@ -363,20 +362,28 @@
           <div class="card mt-5 ">
             <div class="card-body">
               <h5 class="card-title">CONTACT ME</h5>
-              <form action="" method="post">
+              <div class="alert alert-success alert-dismissible fade show d-none myAlert" role="alert">
+                <strong>Message Sent!</strong> your message will be replied via email
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              <form action="" name="submit-to-google-sheet">
                 <h6 class="card-subtitle mb-2 text-muted">Full Name</h6>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control"  aria-label="Username" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control"  aria-label="Username" aria-describedby="basic-addon1" name="nama">
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted">Email</h6>
                 <div class="input-group mb-3">
-                  <input type="text" class="form-control"  aria-label="Username" aria-describedby="basic-addon1">
+                  <input type="text" class="form-control"  aria-label="email" aria-describedby="basic-addon1" name="email">
                 </div>
                 <h6 class="card-subtitle mb-2 text-muted">Your Message</h6>
                 <div class="input-group mb-3">
-                  <textarea type="text" class="form-control" aria-label="with textarea" aria-describedby="basic-addon1"></textarea>
+                  <textarea type="text" class="form-control" aria-label="with textarea" aria-describedby="basic-addon1" name="pesan"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">SEND</button>
+                <button type="submit" class="btn btn-primary btn-kirim">SEND</button>
+                <button class="btn btn-primary btn-loading d-none" type="button" disabled>
+                  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                  Loading...
+                </button>
               </form>
             </div>
           </div>
@@ -423,7 +430,31 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
   </script>
-  <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+  
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbx_C_7HTJfhPouQBpXgR9MMxduLbVahUvPc6ByYWGP9XQ_p2-Xw1lw6uKL3iEPpDTre/exec'
+    const form = document.forms['submit-to-google-sheet'];
+    const btnKirim = document.querySelector('.btn-kirim');
+    const btnLoading = document.querySelector('.btn-loading');
+    const myAlert = document.querySelector('.myAlert');
+  
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+
+      btnLoading.classList.toggle('d-none');
+      btnKirim.classList.toggle('d-none');
+
+      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+        .then(response => {console.log('Success!', response);
+        btnLoading.classList.toggle('d-none');
+        btnKirim.classList.toggle('d-none');
+        myAlert.classList.toggle('d-none')
+        form.reset();
+        })
+        
+        .catch(error => console.error('Error!', error.message))
+    })
+  </script>
 
 
 </body>
